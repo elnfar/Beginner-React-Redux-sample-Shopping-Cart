@@ -1,15 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
 import Navbar from './components/navbar'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import CartContainer from './components/cart-container'
+import { calculateTotals } from './features/cart/cartSlice'
+
+
+
 
 function App() {
   const [count, setCount] = useState(0)
 
-  const {cartItems} = useSelector((state) => state.cart)
+  const {cartItems} = useSelector((store) => store.cart)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(calculateTotals())
+  },[cartItems])
 
   return (
     <main>
